@@ -1,1 +1,9 @@
 .DS_Store
+.vscode
+**.stl
+**.amf
+**.3mf
+**.step
+**__pycache__
+export
+build123d/test/b123d-env/

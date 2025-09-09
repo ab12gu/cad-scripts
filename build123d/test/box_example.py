@@ -9,5 +9,5 @@ with BuildPart() as bp:
 # show(bp)
 
 # Export using build123d's export functionality
-export_stl(bp.part, "rounded_box.stl")
-export_step(bp.part, "rounded_box.step")
+export_stl(bp.part, "generated-cad/rounded_box.stl")
+export_step(bp.part, "generated-cad/rounded_box.step")

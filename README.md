@@ -64,6 +64,15 @@ Run file with temprorary environment
 $ uv run python3 example.py
 ```
 
+NOTE: command `uv add` cannot add to custom environment name (defaults .venv)
+```
+$ uv pip install "package-name"
+$ uv sync
+```
+
+`uv sync` is needed cause it adds to TOML file that is automatic if using `uv add`
+
+
 ## Getting started with OpenSCAD
 
 

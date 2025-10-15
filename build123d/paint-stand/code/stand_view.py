@@ -56,6 +56,12 @@ with BuildPart() as bp:
                     Ellipse(small_minor,small_major, 45)
             extrude(amount=height, mode=Mode.SUBTRACT)
 
+    # Cut Underneath
+    walls = 10
+    for i in range(4):
+        with Locations((0, 2*i*small_major, -height/2)):
+            Box(length-2*walls, width, 2*height-row_height*(4-i), mode=Mode.SUBTRACT)
+
 # Show in OCP CAD viewer
 show(bp)
 

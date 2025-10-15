@@ -1,24 +1,28 @@
+## Paint stand
+#
+# by: Abhay Gupta
+# date created: 25-10-14
+
 from build123d import *
 from ocp_vscode import show
 
-length, width, height = 280, 254, 230
+# Paint ellipse dimensions
+large_minor, large_major = 26/2, 64/2 
+small_minor, small_major = 19/2, 51/2 
 
-mid_drop = 30
-bot_drop = 30
+# Overall stand dimensions
+length, width, height = 280, 2*large_major+6*small_major, 230
 
-large_hole = 26 
-large_hole_width = 26/2
-large_hole_length = 64/2 
-small_hole = 19 # 51 length
-small_hole_width = 19/2 # 51 length
-small_hole_length = 51/2 # 51 length
-
-row1 = width/2 - large_hole_width*3
+# Depth of rows
 row_height = 50
 
-col = length/2-large_hole_length*3
+col = length/2-large_major*3
 
-hole_distance = [-5/2*col, -3/2*col, -col/2, col/2, 3/2*col, 5/2*col]
+center = 5
+
+large_hole_distance = [-3/2*col-center, -1/2*col-center, 1/2*col+center, 3/2*col+center]
+small_hole_distance = [-5/2*col, -3/2*col, -col/2, col/2, 3/2*col, 5/2*col]
+row_distance = [2*large_major, 2*large_major+2*small_major, 2*large_major+4*small_major]
 
 with BuildPart() as bp:
     # "https://build123d.readthedocs.io/en/latest/objects.html#objects_part.Box"
@@ -28,75 +32,25 @@ with BuildPart() as bp:
     Box(length, width, height) 
 
     # Cut Rows
-    with Locations((0, -width* 3/10, height/2)):
-        Box(length, width, row_height, mode=Mode.SUBTRACT)
-
-    with Locations((0, -width* 5/10, height/2)):
-        Box(length, width, row_height*2, mode=Mode.SUBTRACT)
-
-    with Locations((0, -width* 7/10, height/2)):
-        Box(length, width, row_height*3, mode=Mode.SUBTRACT)
+    for i,t in zip(row_distance, [1,2,3]):
+        with Locations((0, -i, height/2)):
+            Box(length, width, t*row_height, mode=Mode.SUBTRACT)
 
     # Row 1 - Large Holes
-
-    with BuildSketch() as bs:
-        with Locations((0, row1)):
-            Ellipse(large_hole_width,large_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    with BuildSketch() as bs:
-        with Locations((-col, row1)):
-            Ellipse(large_hole_width,large_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    with BuildSketch() as bs:
-        with Locations((col, row1)):
-            Ellipse(large_hole_width,large_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    # Row 2 - Small Holes
-
-    
-    for i in distance:
+    for i in large_hole_distance:
         with BuildSketch() as bs:
-            with Locations((i, 25)):
-                Ellipse(small_hole_width,small_hole_length, 45)
+            with Locations((i, width/2 - large_major)):
+                Ellipse(large_minor,large_major, 45)
         extrude(amount=height, mode=Mode.SUBTRACT)
-
-    # Row 3 - Small Holes
-
-    with BuildSketch() as bs:
-        with Locations((0, -25)):
-            Ellipse(small_hole_width,small_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    with BuildSketch() as bs:
-        with Locations((-col, -25)):
-            Ellipse(small_hole_width,small_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    with BuildSketch() as bs:
-        with Locations((col, -25)):
-            Ellipse(small_hole_width,small_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    # Row 4 - Small Holes
-
-    with BuildSketch() as bs:
-        with Locations((0, -75)):
-            Ellipse(small_hole_width,small_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    with BuildSketch() as bs:
-        with Locations((-col, -75)):
-            Ellipse(small_hole_width,small_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
-    with BuildSketch() as bs:
-        with Locations((col, -75)):
-            Ellipse(small_hole_width,small_hole_length, 45)
-    extrude(amount=height, mode=Mode.SUBTRACT)
-
+    
+    small_rows = [width/2-(2*large_major+x) for x in [small_major, 3*small_major, 5*small_major]]
+    # Row 2 - Small Holes
+    for i in small_rows:
+        for j in small_hole_distance:
+            with BuildSketch() as bs:
+                with Locations((j, i)):
+                    Ellipse(small_minor,small_major, 45)
+            extrude(amount=height, mode=Mode.SUBTRACT)
 
 # Show in OCP CAD viewer
 show(bp)

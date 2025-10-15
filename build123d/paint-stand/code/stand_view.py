@@ -11,19 +11,21 @@ large_minor, large_major = 26/2, 64/2
 small_minor, small_major = 19/2, 51/2 
 
 # Overall stand dimensions
-length, width, height = 280, 2*large_major+6*small_major, 230
+length = 8*large_major
+width = 2*large_major+6*small_major
+height = 230
 
 # Depth of rows
 row_height = 50
 
-col = length/2-large_major*3
+col = large_major
 
-center = 5
-factor = 3
+center = 15
+factor = 1.5
 lg_center = factor*center
 
-large_hole_distance = [-3/2*col-lg_center, -1/2*col-lg_center, 1/2*col+lg_center, 3/2*col+lg_center]
-small_hole_distance = [-5/2*col-center, -3/2*col-center, -col/2-center, col/2+center, 3/2*col+center, 5/2*col+center]
+large_hole_distance = [-2*col-lg_center, -1/2*col-lg_center, 1/2*col+lg_center, 2*col+lg_center]
+small_hole_distance = [-5/2*col-center, -3/2*col-center, -1/2*col-center, 1/2*col+center, 3/2*col+center, 5/2*col+center]
 row_distance = [2*large_major, 2*large_major+2*small_major, 2*large_major+4*small_major]
 
 with BuildPart() as bp:

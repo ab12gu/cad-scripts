@@ -11,7 +11,7 @@ large_minor, large_major = 26/2, 64/2
 small_minor, small_major = 19/2, 51/2 
 
 # Overall stand dimensions
-length = 8*large_major
+length = 7*large_major
 width = 2*large_major+6*small_major
 height = 230
 
@@ -20,11 +20,11 @@ row_height = 50
 
 col = large_major
 
-center = 15
+center = 0
 factor = 1.5
 lg_center = factor*center
 
-large_hole_distance = [-2*col-lg_center, -1/2*col-lg_center, 1/2*col+lg_center, 2*col+lg_center]
+large_hole_distance = [-6/3*col-lg_center, -2/3*col-lg_center, 2/3*col+lg_center, 6/3*col+lg_center]
 small_hole_distance = [-5/2*col-center, -3/2*col-center, -1/2*col-center, 1/2*col+center, 3/2*col+center, 5/2*col+center]
 row_distance = [2*large_major, 2*large_major+2*small_major, 2*large_major+4*small_major]
 
@@ -36,9 +36,10 @@ with BuildPart() as bp:
     Box(length, width, height) 
 
     # Cut Rows
-    for i,t in zip(row_distance, [1,2,3]):
+
+    for e,i in enumerate(row_distance):
         with Locations((0, -i, height/2)):
-            Box(length, width, t*row_height, mode=Mode.SUBTRACT)
+            Box(length, width, (e+1)*row_height, mode=Mode.SUBTRACT)
 
     # Row 1 - Large Holes
     for i in large_hole_distance:
@@ -62,9 +63,11 @@ with BuildPart() as bp:
         with Locations((0, 2*i*small_major, -height/2)):
             Box(length-2*walls, width, 2*height-row_height*(4-i), mode=Mode.SUBTRACT)
 
+print(length, width, height)
+
 # Show in OCP CAD viewer
 show(bp)
 
 # Export using build123d's export functionality
-# export_stl(bp.part, "../generated-cad/rounded_box.stl")
-# export_step(bp.part, "../generated-cad/rounded_box.step")
+export_stl(bp.part, "../generated-cad/paint_stand.stl")
+export_step(bp.part, "../generated-cad/paint_stand.step")

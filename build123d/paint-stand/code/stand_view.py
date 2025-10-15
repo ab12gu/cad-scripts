@@ -19,9 +19,11 @@ row_height = 50
 col = length/2-large_major*3
 
 center = 5
+factor = 3
+lg_center = factor*center
 
-large_hole_distance = [-3/2*col-center, -1/2*col-center, 1/2*col+center, 3/2*col+center]
-small_hole_distance = [-5/2*col, -3/2*col, -col/2, col/2, 3/2*col, 5/2*col]
+large_hole_distance = [-3/2*col-lg_center, -1/2*col-lg_center, 1/2*col+lg_center, 3/2*col+lg_center]
+small_hole_distance = [-5/2*col-center, -3/2*col-center, -col/2-center, col/2+center, 3/2*col+center, 5/2*col+center]
 row_distance = [2*large_major, 2*large_major+2*small_major, 2*large_major+4*small_major]
 
 with BuildPart() as bp:

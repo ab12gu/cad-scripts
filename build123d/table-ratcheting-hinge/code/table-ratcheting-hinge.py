@@ -9,7 +9,7 @@ from build123d import *
 from ocp_vscode import show
 
 inch = 25.4
-length = 256
+length = inch*10-inch
 thickness = inch*2
 width = inch*4
 
@@ -30,9 +30,9 @@ with BuildPart() as hinge_p:
             Circle(inch/4,mode=Mode.SUBTRACT)
         
         for i in range(3):
-            with Locations((3*inch*i+2*inch,width-inch)):
+            with Locations((3*inch*i+3/2*inch,width-inch)):
                 Circle(inch,mode=Mode.SUBTRACT)
-            with Locations((3*inch*i+2*inch,width)):
+            with Locations((3*inch*i+3/2*inch,width)):
                 Rectangle(2*inch,2*inch,mode=Mode.SUBTRACT)
     extrude(amount=thickness)
 

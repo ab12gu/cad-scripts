@@ -1,8 +1,13 @@
 # Build123d
 
+Run flask server to render build:
 
-## Dimensions
+```
+$ source .venv/bin/activate
+$ python -m ocp_vscode --theme dark
+$ python box_generate.py
+```
 
-- No inherent units associated with them. 
-- However, when exporting parts to external formats like STL or STEP the units are assumed to be millimeters (mm).
-- Some export formats like DXF have the ability to explicitly set the units used
+See:
+
+[https://blog.abgup.com/design/3d-modeling/code-based-modelling/build123d/](https://blog.abgup.com/design/3d-modeling/code-based-modelling/build123d/)

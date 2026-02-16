@@ -1,0 +1,20 @@
+# Cone spacers for truing stand
+# by: Abhay Gupta
+#
+#
+
+
+from build123d import *
+from ocp_vscode import *
+
+def main():
+
+    length, width, thickness = 80.0, 60.0, 10.0
+
+    sk3 = Circle(width) - Rectangle(length / 2, width / 2)
+    ex3 = extrude(sk3, amount=2 * thickness)
+
+    show(ex3)
+
+if __name__ == "__main__":
+    main()
